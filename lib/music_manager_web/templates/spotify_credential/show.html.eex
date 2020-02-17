@@ -1,0 +1,18 @@
+<h1>Show Spotify credential</h1>
+
+<ul>
+
+  <li>
+    <strong>Access token:</strong>
+    <%= @spotify_credential.access_token %>
+  </li>
+
+  <li>
+    <strong>Refresh token:</strong>
+    <%= @spotify_credential.refresh_token %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.spotify_credential_path(@conn, :edit, @spotify_credential) %></span>
+<span><%= link "Back", to: Routes.spotify_credential_path(@conn, :index) %></span>

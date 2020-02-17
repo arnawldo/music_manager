@@ -74,3 +74,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# set spotify values
+# necessary scope for reading user and playlist data off spotify
+config :music_manager, :spotify_scope, "user-read-private user-read-email playlist-read-private"

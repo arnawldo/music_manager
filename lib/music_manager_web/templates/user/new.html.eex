@@ -1,0 +1,7 @@
+<h1>Register</h1>
+
+<%= form_for @changeset, Routes.user_path(@conn, :create), [as: :register_details], fn f -> %>
+  <%= text_input f, :username %>
+  <%= password_input f, :password %>
+  <%= submit "Register" %>
+<% end %>

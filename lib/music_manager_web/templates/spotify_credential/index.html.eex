@@ -1,0 +1,28 @@
+<h1>Listing Spotify credentials</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Access token</th>
+      <th>Refresh token</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for spotify_credential <- @spotify_credentials do %>
+    <tr>
+      <td><%= spotify_credential.access_token %></td>
+      <td><%= spotify_credential.refresh_token %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.spotify_credential_path(@conn, :show, spotify_credential) %></span>
+        <span><%= link "Edit", to: Routes.spotify_credential_path(@conn, :edit, spotify_credential) %></span>
+        <span><%= link "Delete", to: Routes.spotify_credential_path(@conn, :delete, spotify_credential), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Spotify credential", to: Routes.spotify_credential_path(@conn, :new) %></span>

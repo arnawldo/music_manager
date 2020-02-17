@@ -1,0 +1,8 @@
+<h1>Spotify User Details should show here</h1>
+<ul>
+    <li><%= @spotify_info["country"] %></li>
+    <li><%= @spotify_info["display_name"] %></li>
+    <li><%= @spotify_info["email"] %></li>
+    <li><%= @spotify_info["product"] %></li>
+    <li><%= @spotify_info["href"]%></li>
+</ul>

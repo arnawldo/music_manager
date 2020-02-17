@@ -1,0 +1,7 @@
+<h1>Login</h1>
+
+<%= form_for @conn, Routes.session_path(@conn, :create), [as: :login_details], fn f -> %>
+  <%= text_input f, :username %>
+  <%= password_input f, :password %>
+  <%= submit "Login" %>
+<% end %>
