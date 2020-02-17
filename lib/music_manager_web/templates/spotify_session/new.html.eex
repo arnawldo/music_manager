@@ -1,0 +1,3 @@
+<h1>Login to Spotify</h1>
+
+<%= button "Login", to: Routes.spotify_session_path(@conn, :create) %>
