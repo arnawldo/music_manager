@@ -1,4 +1,4 @@
-defmodule MusicManager.Integrations.SpotifyCredential do
+defmodule MusicManager.Spotify.Credential do
   use Ecto.Schema
   import Ecto.Changeset
   alias MusicManager.Accounts.User

@@ -76,5 +76,11 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # set spotify values
+
 # necessary scope for reading user and playlist data off spotify
 config :music_manager, :spotify_scope, "user-read-private user-read-email playlist-read-private"
+config :music_manager, :spotify_redirect_uri, "http://localhost:4000/spotify_callback"
+
+# Finally import the config/dev.secret.exs which loads secrets
+# and configuration from environment variables.
+import_config "dev.secret.exs"
