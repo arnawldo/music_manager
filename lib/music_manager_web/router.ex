@@ -23,7 +23,11 @@ defmodule MusicManagerWeb.Router do
     resources "/session", SessionController, only: [:new, :create, :delete], singleton: true
 
     get "/spotify_callback", SpotifySessionController, :callback
-    resources "/spotify_sessions", SpotifySessionController, only: [:new, :create, :index]
+    get "/spotify_refresh", SpotifySessionController, :refresh
+
+    resources "/spotify_sessions", SpotifySessionController,
+      only: [:new, :create, :show],
+      singleton: true
   end
 
   # Other scopes may use custom stacks.

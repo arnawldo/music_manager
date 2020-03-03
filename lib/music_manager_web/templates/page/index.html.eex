@@ -8,7 +8,7 @@
     <ul>
       <li>
         <%= if @current_user && @current_user.spotify_credential do %>
-            <%= link "My Spotify", to: Routes.spotify_session_path(@conn, :index)%>
+            <%= link "Login to Spotify", to: Routes.spotify_session_path(@conn, :show)%>
         <% else %>
              <%= link "Login to Spotify", to: Routes.spotify_session_path(@conn, :new)%>
         <% end %>

@@ -1,7 +1,7 @@
 defmodule MusicManagerWeb.Plugs.Auth do
   import Plug.Conn
   import Phoenix.Controller
-
+  alias MusicManagerWeb.Router.Helpers, as: Routes
   alias MusicManager.Accounts.User
   alias MusicManager.Accounts
   alias MusicManager.Repo

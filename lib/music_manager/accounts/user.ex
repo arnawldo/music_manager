@@ -1,13 +1,13 @@
 defmodule MusicManager.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias MusicManager.Integrations.SpotifyCredential
+  alias MusicManager.Spotify.Credential
 
   schema "users" do
     field :password, :string
     field :username, :string
 
-    has_one :spotify_credential, SpotifyCredential, on_replace: :update
+    has_one :spotify_credential, Credential, on_replace: :update
 
     timestamps()
   end

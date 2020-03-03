@@ -16,16 +16,8 @@ spotify_secret_key =
     Check spotify app dashboard settings for value.
     """
 
-spotify_redirect_uri =
-  System.get_env("SPOTIFY_REDIRECT_URI") ||
-    raise """
-    environment variable SPOTIFY_REDIRECT_URI is missing.
-    Check spotify app dashboard settings for value.
-    """
-
 config :music_manager, :spotify_client_id, spotify_client_id
 config :music_manager, :spotify_secret_key, spotify_secret_key
-config :music_manager, :spotify_redirect_uri, spotify_redirect_uri
 
 # ## Using releases (Elixir v1.9+)
 #
