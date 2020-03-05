@@ -1,5 +1,7 @@
 # MusicManager
 
+[![CircleCI](https://circleci.com/gh/arnawldo/music_manager.svg?style=svg)](https://circleci.com/gh/arnawldo/music_manager)
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
