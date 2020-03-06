@@ -54,33 +54,36 @@ defmodule MusicManager.Spotify do
   Get my account details from Spotify
   """
   @spec get_my_spotify_details(%User{}) :: {:ok, map()} | {:error, atom() | String.t()}
-  def get_my_spotify_details(%User{} = user) do
+  def get_my_spotify_details(%User{spotify_credential: %Ecto.Association.NotLoaded{}} = user) do
     user = Repo.preload(user, :spotify_credential)
+    get_my_spotify_details(user)
+  end
 
-    if user.spotify_credential do
-      url = my_spotify_profile_url()
-      access_token = user.spotify_credential.access_token
+  def get_my_spotify_details(%User{spotify_credential: nil} = _user) do
+    {:error, :nospotifycredential}
+  end
 
-      headers = [
-        Authorization: "Bearer #{access_token}",
-        Accept: "Application/json; Charset=utf-8"
-      ]
+  def get_my_spotify_details(%User{} = user) do
+    url = my_spotify_profile_url()
+    access_token = user.spotify_credential.access_token
 
-      case HTTPoison.get(url, headers) do
-        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-          {:ok, Poison.decode!(body)}
+    headers = [
+      Authorization: "Bearer #{access_token}",
+      Accept: "Application/json; Charset=utf-8"
+    ]
 
-        {:ok, %HTTPoison.Response{status_code: 401}} ->
-          {:error, :unauthorized}
+    case HTTPoison.get(url, headers) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
 
-        {:error, %HTTPoison.Error{reason: reason}} ->
-          {:error, reason}
+      {:ok, %HTTPoison.Response{status_code: 401}} ->
+        {:error, :unauthorized}
 
-        _ ->
-          {:error, :unknown}
-      end
-    else
-      {:error, :nospotifycredential}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
+
+      _ ->
+        {:error, :unknown}
     end
   end
 
@@ -88,9 +91,16 @@ defmodule MusicManager.Spotify do
   Refresh Spotify access token
   """
   @spec get_new_access_token(%User{}) :: {:ok, String.t()} | {:error, atom() | String.t()}
-  def get_new_access_token(user) do
+  def get_new_access_token(%User{spotify_credential: %Ecto.Association.NotLoaded{}} = user) do
     user = Repo.preload(user, :spotify_credential)
+    get_new_access_token(user)
+  end
 
+  def get_new_access_token(%User{spotify_credential: nil}) do
+    {:error, :nospotifycredential}
+  end
+
+  def get_new_access_token(%User{} = user) do
     with %Spotify.Credential{refresh_token: refresh_token} <- user.spotify_credential,
          {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
            request_new_access_token(refresh_token),
@@ -99,9 +109,6 @@ defmodule MusicManager.Spotify do
            update_spotify_credential(user.spotify_credential, %{access_token: access_token}) do
       {:ok, access_token}
     else
-      nil ->
-        {:error, :nospotifycredential}
-
       {:ok, %HTTPoison.Response{status_code: 400, body: body}} ->
         %{"error" => error, "error_description" => error_description} = Poison.decode!(body)
         {:error, error <> " : " <> error_description}

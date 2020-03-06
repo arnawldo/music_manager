@@ -39,3 +39,4 @@ config/dev.secret.exs
 # editor/IDE
 *.sublime-workspace
 .idea
+.elixir_ls/
